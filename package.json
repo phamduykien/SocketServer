@@ -3,8 +3,10 @@
     "version": "0.0.1",
     "description": "sme-cloud-socket-server",
     "dependencies": {
+        "amqplib": "^0.5.5",
         "aws-sdk": "^2.521.0",
         "express": "^4.15.2",
+        "node-rdkafka": "^2.7.1-2",
         "socket.io": "^2.2.0",
         "uuid": "^3.3.3"
     }

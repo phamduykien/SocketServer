@@ -1,8 +1,8 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var AWS = require('aws-sdk');
 var uuid = require('uuid');
+var amqp = require('amqplib');
 var port = process.env.PORT || 3000;
 
 app.get('/', function (req, res) {
@@ -24,20 +24,10 @@ http.listen(port, function () {
  * Nghe AWS MQ de nhan message
  */
 function subscribeMQ() {
-  var creds = new AWS.Credentials('akid', 'secret');
-  var options = {
-    endpoint: "https://b-c74ec17e-9b0a-4ef4-bc91-40ef295ae9b2-1.mq.ap-southeast-1.amazonaws.com:8162",
-    //credentials: creds
-  };
-  var mq = new AWS.MQ(options);
-  mq.createBroker({ Users: [{ Password: "123456789", Username: "pdkien" }] }, function (err, data) {
-    if (err) {
-      // an error occurred
-      console.log(err, err.stack);
-    }
-    else {
-      // successful response
-      console.log(data);
-    }
+  amqp.connect("amqps://pdkien:12345678@b-c74ec17e-9b0a-4ef4-bc91-40ef295ae9b2-1.mq.ap-southeast-1.amazonaws.com:8162").then(res => {
+    console.log(res);
+  }).catch(err => {
+    console.log(err);
   });
+
 }
